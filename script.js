@@ -1,14 +1,11 @@
 //Variables
-const calcOutput = document.querySelector(".calculator_output");
 const val1 = document.querySelector(".val1");
 const val2 = document.querySelector(".val2");
 const operatorContainer = document.querySelector(".operator")
-const resultContainer = document.querySelector(".resultContainer");
 const btn = document.querySelectorAll(".num");
 const clearAllBtn = document.querySelector(".clear_all");
 const operatorBtn = document.querySelectorAll(".operator_btn");
 const eqBtn = document.querySelector(".equals_btn");
-const minusBtn = document.querySelector(".minus_btn");
 
 
 //Clear all button onclick event
@@ -16,7 +13,6 @@ clearAllBtn.addEventListener("click", function(){
     val1.textContent = "0";
     val2.textContent = "";
     operatorContainer.textContent = "";
-    resultContainer.textContent = "";
 })
 
 
@@ -24,35 +20,43 @@ clearAllBtn.addEventListener("click", function(){
 eqBtn.addEventListener('click',  function(){
     if(val2.textContent && operatorContainer.textContent !== ""){
         operate();
-        val1.textContent = "";
-        val2.textContent = "";
         operatorContainer.textContent = "";
+        val2.textContent = "";
+        
     } 
 });
 
 
 
 function add(){
-
-    resultContainer.append(Number(val1.textContent) + Number(val2.textContent));
+    let addResult = Number(val1.textContent) + Number(val2.textContent);
+    val1.textContent = addResult;
 }
 
 
 
 function subtract(){
-    resultContainer.append(Number(val1.textContent) - Number(val2.textContent));
+    let subtractResult = Number(val1.textContent) - Number(val2.textContent);
+    val1.textContent = subtractResult;
 }
 
 
 
 function multiply(){
-    resultContainer.append(Number(val1.textContent) * Number(val2.textContent));
+    let multiplyResult = Number(val1.textContent) * Number(val2.textContent);
+    val1.textContent = multiplyResult;
 }
 
 
 
 function divide(){
-    resultContainer.append(Math.round((((Number(val1.textContent) / Number(val2.textContent))) + Number.EPSILON) * 10000) / 10000);
+    let divideResult = Math.round((((Number(val1.textContent) / Number(val2.textContent))) + Number.EPSILON) * 10000) / 10000;
+    if(val2.textContent === "0") {
+        alert("Error: Cannot divide by zero.");
+        val1.textContent = "0";
+    } else {
+        val1.textContent = divideResult;
+    }
     
 }
 
@@ -76,10 +80,8 @@ function appendOperators() {
         operatorBtn[i].addEventListener('click', function(){
             if(val2.textContent !== ""){
                 operate();
-                val1.textContent = "";
+           
                 val2.textContent = "";
-                val1.append(Math.round((Number(resultContainer.textContent) + Number.EPSILON) * 10000)/1000);
-                resultContainer.textContent = "";
                 operatorContainer.textContent = "";
             }
 
@@ -87,15 +89,11 @@ function appendOperators() {
                 operatorContainer.textContent = "";
             }
            
-            
             operatorContainer.append(values);
             if(val1.textContent === "0"){
                 operatorContainer.textContent = "";
             }
-            
-            
-        })
-        
+        }) 
     }
 }
 
@@ -104,16 +102,9 @@ function appendNumbers() {
     for (let i = 0; i < btn.length; i++) {
         let values = btn[i].textContent;
         btn[i].addEventListener('click', function(){
-            if(val1.textContent.startsWith("0")){
+            if(val1.textContent.startsWith("0")){ //this doesn't let to put more than 1 zero if 1st digit is zero
                 val1.textContent = "";
             }
-        
-
-
-            if(resultContainer.textContent !== ""){
-                resultContainer.textContent = "";
-            }
-         
 
             if(operatorContainer.textContent === "") {
                 val1.append(values);
@@ -125,12 +116,11 @@ function appendNumbers() {
                 val1.innerText = val1.innerText.substring(0, 9);   
             }
         })
-        
     }
 }
 
 
-
+// val1.append(Math.round((Number(resultContainer.textContent) + Number.EPSILON) * 10000)/10000);
 
 appendNumbers();
 appendOperators();
