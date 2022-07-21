@@ -6,6 +6,7 @@ const btn = document.querySelectorAll(".num");
 const clearAllBtn = document.querySelector(".clear_all");
 const operatorBtn = document.querySelectorAll(".operator_btn");
 const eqBtn = document.querySelector(".equals_btn");
+const dot = document.querySelector(".dot");
 
 
 //Clear all button onclick event
@@ -26,7 +27,25 @@ eqBtn.addEventListener('click',  function(){
     } 
 });
 
+dot.addEventListener('click', function(){
+    if(val2.textContent === "" && !val1.textContent.includes(".") && operatorContainer.textContent === "") {
+        val1.textContent += ".";
+    } else if (val1.textContent !== "" && val2.textContent == "" && !val2.textContent.includes(".") && operatorContainer.textContent !== ""){
+        val2.textContent = "0";
+        val2.textContent += ".";
+    } else if (val2.textContent !== "" && !val2.textContent.includes(".")){
+        val2.textContent += ".";
+    } 
 
+
+   /* if(val1.textContent.includes(".")){ // can put only 1 dot
+        return;
+    }else {
+        val1.textContent += ".";
+    }*/
+})
+
+//Functions
 
 function add(){
     let addResult = Number(val1.textContent) + Number(val2.textContent);
@@ -80,7 +99,6 @@ function appendOperators() {
         operatorBtn[i].addEventListener('click', function(){
             if(val2.textContent !== ""){
                 operate();
-           
                 val2.textContent = "";
                 operatorContainer.textContent = "";
             }
@@ -102,15 +120,18 @@ function appendNumbers() {
     for (let i = 0; i < btn.length; i++) {
         let values = btn[i].textContent;
         btn[i].addEventListener('click', function(){
-            if(val1.textContent.startsWith("0")){ //this doesn't let to put more than 1 zero if 1st digit is zero
-                val1.textContent = "";
-            }
-
             if(operatorContainer.textContent === "") {
+                if(val1.textContent.startsWith("0") && !val1.textContent.includes(".")){
+                    val1.textContent = "";
+                }
                 val1.append(values);
             }else {
                 val2.append(values);
             }
+            
+            if(val1.textContent.startsWith("0") && !val1.textContent.includes(".")){ //this doesn't let to put more than 1 zero if 1st digit is zero
+                return;
+            } 
             
             if(val1.innerText.length >= 9) {
                 val1.innerText = val1.innerText.substring(0, 9);   
@@ -118,6 +139,7 @@ function appendNumbers() {
         })
     }
 }
+
 
 
 // val1.append(Math.round((Number(resultContainer.textContent) + Number.EPSILON) * 10000)/10000);
