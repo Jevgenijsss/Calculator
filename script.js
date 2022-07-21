@@ -7,6 +7,7 @@ const clearAllBtn = document.querySelector(".clear_all");
 const operatorBtn = document.querySelectorAll(".operator_btn");
 const eqBtn = document.querySelector(".equals_btn");
 const dot = document.querySelector(".dot");
+const deleteBtn = document.querySelector(".delete_btn");
 
 
 //Clear all button onclick event
@@ -27,6 +28,7 @@ eqBtn.addEventListener('click',  function(){
     } 
 });
 
+//Adding decimal dot
 dot.addEventListener('click', function(){
     if(val2.textContent === "" && !val1.textContent.includes(".") && operatorContainer.textContent === "") {
         val1.textContent += ".";
@@ -35,14 +37,23 @@ dot.addEventListener('click', function(){
         val2.textContent += ".";
     } else if (val2.textContent !== "" && !val2.textContent.includes(".")){
         val2.textContent += ".";
+    }
+})
+
+//Delete button
+deleteBtn.addEventListener('click', function(){
+    if(val1.textContent !== "" && val2.textContent === "" && operatorContainer.textContent === "") {
+        val1.textContent = val1.textContent.slice(0,-1);
+    }else if(val1.textContent !== "" && val2.textContent === ""){
+        operatorContainer.textContent = "";}
+    else if(val1.textContent !== "" && val2.textContent !==""){
+        val2.textContent = val2.textContent.slice(0,-1);
     } 
-
-
-   /* if(val1.textContent.includes(".")){ // can put only 1 dot
-        return;
-    }else {
-        val1.textContent += ".";
-    }*/
+    if(val1.textContent === "" && val2.textContent === "" && operatorContainer.textContent === "") {
+        val1.textContent = "0";
+    }
+       
+    
 })
 
 //Functions
@@ -140,10 +151,6 @@ function appendNumbers() {
         })
     }
 }
-
-
-
-// val1.append(Math.round((Number(resultContainer.textContent) + Number.EPSILON) * 10000)/10000);
 
 appendNumbers();
 appendOperators();
