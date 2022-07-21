@@ -126,16 +126,17 @@ function appendNumbers() {
                 }
                 val1.append(values);
             }else {
+                if (val2.textContent === '0'){
+                    val2.textContent = '';
+                }
                 val2.append(values);
             }
             
             if(val1.textContent.startsWith("0") && !val1.textContent.includes(".")){ //this doesn't let to put more than 1 zero if 1st digit is zero
                 return;
             } 
-            
-            if(val1.innerText.length >= 9) {
-                val1.innerText = val1.innerText.substring(0, 9);   
-            }
+        val1.innerText = val1.innerText.substring(0, 12);   
+        val2.innerText = val2.innerText.substring(0, 12);   
         })
     }
 }
