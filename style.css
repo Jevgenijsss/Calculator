@@ -9,6 +9,7 @@ body{
     background-color: #E7E7E7;
     display: flex;
     justify-content: center;
+    margin-right: 13vw;
 }
 
 .main_container {
@@ -18,7 +19,7 @@ body{
 }
 
 .calculator_output {
-    height: 30vh;
+    height: 24vh;
     width: 40.1vw;
     background-color: black;
     color: white;
@@ -35,19 +36,22 @@ body{
 
 
 .calculator_input {
+    display: flex;
+    justify-content: center;
     background-color: #F4F4F4;
     box-shadow: inset 0px 4px 4px rgba(112, 111, 111, 0.5);
     border-radius: 20px 20px 0px 0px;
     height: 65vh;
     width: 40.1vw;
+    padding-bottom: 30vh;
     
 }
 
 .calculator_buttons {
   display: grid;
   grid-template: repeat(4, 1fr) / repeat(4, 1fr);
-  gap: 25px;
-  padding: 91px 16px 0 16px;
+  gap: 30px;
+  padding: 60px 16px 0 16px;
 }
 
 button {
